@@ -324,7 +324,7 @@ def compute_interval_pval(pval_results: dict, N: int, n: int, out_dir: str, chro
 @njit
 def check_overlap(i1, j1, a1, b1, i2, j2, a2, b2):
     if i1 == i2 and j1 == j2 and a1 == a2 and b1 == b2:
-        return False
+        return True
 
     i1_end = i1 + a1 - 1
     j1_end = j1 + b1 - 1
@@ -375,6 +375,7 @@ def trim_intervals(intervals, p_values):
                     keep[j] = False
     return keep
 
+
 def process_pval_file(out_dir, chrom1, chrom2):
 
     if chrom1 == chrom2:
@@ -389,15 +390,14 @@ def process_pval_file(out_dir, chrom1, chrom2):
     # Read the CSV file into NumPy arrays
     data = np.genfromtxt(input_filename, delimiter=',', skip_header=1)
     # Adjust indices if needed based on your CSV structure
-    i = data[:, 0].astype(np.int64)
-    j = data[:, 1].astype(np.int64)
-    a = data[:, 2].astype(np.int64)
-    b = data[:, 3].astype(np.int64)
+    i = data[:, 0].astype(np.int32)
+    j = data[:, 1].astype(np.int32)
+    a = data[:, 2].astype(np.int32)
+    b = data[:, 3].astype(np.int32)
     p_values = data[:, 6]
 
     n = len(i)
     print(f"Total intervals read: {n}", flush=True)
-
     # Stack intervals into a single array
     intervals = np.stack((i, j, a, b), axis=1)
 
