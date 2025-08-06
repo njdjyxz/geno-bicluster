@@ -50,20 +50,15 @@ def setup_logging(log_path: Path, *, console_level: int = logging.INFO) -> None:
     # ---------- file ----------
     fh = logging.FileHandler(log_path, mode="w", encoding="utf-8")
     fh.setLevel(logging.DEBUG)
-
-    # ---------- console ----------
-    ch = logging.StreamHandler(sys.stderr)
-    ch.setLevel(console_level)
+    logging.getLogger("numba").setLevel(logging.WARNING)
 
     # ---------- formatter ----------
     fmt = "%(asctime)s | %(levelname)-8s | %(message)s"
     date = "%Y-%m-%d %H:%M:%S"
     formatter = logging.Formatter(fmt, datefmt=date)
     fh.setFormatter(formatter)
-    ch.setFormatter(formatter)
 
     logger.addHandler(fh)
-    logger.addHandler(ch)
 
     # ---------- transparently funnel print() → logger.info ----------
     _orig_print = builtins.print
@@ -86,9 +81,9 @@ def main(argv: list[str] | None = None) -> None:
     args = _build_parser().parse_args(argv)
     t0 = perf_counter()
 
-    print("Running geno-bicluster with:", vars(args), file=sys.stderr)
+    print("Running geno-bicluster with:\n", "\n".join([f"\t{k}: {v}" for k,v in vars(args).items()]), file=sys.stderr)
 
-    # Check file exist (Need to varify TODO)
+
     if not args.bim.is_file():
         raise FileNotFoundError(f"{str(args.bim)} does not exists or is not a file")
     if not args.interactions.is_file():

@@ -160,7 +160,7 @@ def initialize_matrices2(bim_file: str, interaction_files: str, chrom1: str, chr
     else:
         N = total_markers1 * total_markers2
 
-    significant_interactions = np.zeros((len(int_list), 2), dtype=np.int32) # TODO: need to monitor the array size
+    significant_interactions = np.zeros((len(int_list), 2), dtype=np.int64) # TODO: need to monitor the array size
 
     idx = 0
     
@@ -389,10 +389,10 @@ def process_pval_file(out_dir, chrom1, chrom2):
     # Read the CSV file into NumPy arrays
     data = np.genfromtxt(input_filename, delimiter=',', skip_header=1)
     # Adjust indices if needed based on your CSV structure
-    i = data[:, 0].astype(np.int32)
-    j = data[:, 1].astype(np.int32)
-    a = data[:, 2].astype(np.int32)
-    b = data[:, 3].astype(np.int32)
+    i = data[:, 0].astype(np.int64)
+    j = data[:, 1].astype(np.int64)
+    a = data[:, 2].astype(np.int64)
+    b = data[:, 3].astype(np.int64)
     p_values = data[:, 6]
 
     n = len(i)
