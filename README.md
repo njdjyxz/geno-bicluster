@@ -14,7 +14,7 @@ than naïve Python) and handles both intra- and inter-chromosomal scans.
 ### Install
 
 ```bash
-pip install "git+https://github.com/<YOUR-USER>/geno-bicluster.git@main"
+pip install "git+https://github.com/njdjyxz/geno-bicluster.git@main"
 ```
 
 ### Command-line reference
@@ -30,5 +30,4 @@ optional:
   --max-len INT             longest rectangle side (SNPs)        [60]
   --min-int INT             min # significant hits per rectangle [0]
   -o / --out-dir DIR        output folder                        [.]
-  --log-console             also echo log messages to terminal
 ```
